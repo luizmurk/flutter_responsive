@@ -39,7 +39,7 @@ List demo_data = [
     "isAttachmentAvailable": false,
     "isChecked": true,
     "tagColor": null,
-    "time": "Now"
+    "time": "Now",
   },
   {
     "name": "Elvia Atkins",
