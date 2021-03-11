@@ -4,32 +4,60 @@ import 'package:websafe_svg/websafe_svg.dart';
 import '../constants.dart';
 import 'counter_badge.dart';
 
-class SideMenuItem extends StatelessWidget {
+class SideMenuItem extends StatefulWidget {
   const SideMenuItem({
     Key key,
     this.isActive,
-    this.isHover = false,
+    this.activeTitle,
     this.itemCount,
-    this.showBorder = true,
+    this.showBorder = false,
     @required this.iconSrc,
     @required this.title,
     @required this.press,
   }) : super(key: key);
 
-  final bool isActive, isHover, showBorder;
   final int itemCount;
-  final String iconSrc, title;
+  final String iconSrc, title, activeTitle;
   final VoidCallback press;
+  final bool isActive, showBorder;
+
+  @override
+  _SideMenuItemState createState() => _SideMenuItemState();
+}
+
+class _SideMenuItemState extends State<SideMenuItem> {
+  bool isHover;
+  bool activeHover;
+  bool activated;
+  //String activeTitle;
 
   @override
   Widget build(BuildContext context) {
+    (widget.title == widget.activeTitle) ? activated = true : activated = false;
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: InkWell(
-        onTap: press,
+        onTap: widget.press,
+        onHover: (activeHover) {
+          if (activeHover) {
+            //The mouse is hovering.
+            //print(activeHover);
+            setState(() {
+              //print('hovering');
+              isHover = true;
+            });
+          } else {
+            //The mouse is no longer hovering.
+            setState(() {
+              // print('Done hovering');
+              isHover = false;
+            });
+          }
+        },
+        hoverColor: kTextColor,
         child: Row(
           children: [
-            (isActive || isHover)
+            (widget.isActive || isHover)
                 ? WebsafeSvg.asset(
                     "assets/Icons/Angle right.svg",
                     width: 15,
@@ -39,7 +67,7 @@ class SideMenuItem extends StatelessWidget {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(bottom: 15, right: 5),
-                decoration: showBorder
+                decoration: widget.showBorder
                     ? BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Color(0xFFDFE2EF)),
@@ -49,20 +77,21 @@ class SideMenuItem extends StatelessWidget {
                 child: Row(
                   children: [
                     WebsafeSvg.asset(
-                      iconSrc,
+                      widget.iconSrc,
                       height: 20,
-                      color: (isActive || isHover) ? kPrimaryColor : kGrayColor,
+                      color:
+                          (activated || isHover) ? kPrimaryColor : kGrayColor,
                     ),
                     SizedBox(width: kDefaultPadding * 0.75),
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.button.copyWith(
-                            color:
-                                (isActive || isHover) ? kTextColor : kGrayColor,
-                          ),
-                    ),
+                    Text(widget.title,
+                        style: TextStyle(
+                            color: (activated || isHover)
+                                ? kTextColor
+                                : kGrayColor,
+                            fontFamily: 'Varela Round')),
                     Spacer(),
-                    if (itemCount != null) CounterBadge(count: itemCount)
+                    if (widget.itemCount != null)
+                      CounterBadge(count: widget.itemCount)
                   ],
                 ),
               ),

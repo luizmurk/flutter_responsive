@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:outlook/components/side_menu.dart';
 import 'package:outlook/models/Email.dart';
 import 'package:outlook/responsive.dart';
-import 'package:outlook/screens/email/email_screen.dart';
+import 'package:outlook/screens/email/DisplayScreen.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../../../constants.dart';
@@ -115,13 +115,13 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                     isActive: Responsive.isMobile(context) ? false : index == 0,
                     email: emails[index],
                     press: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EmailScreen(email: emails[index]),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         EmailScreen(email: emails[index]),
+                      //   ),
+                      // );
                     },
                   ),
                 ),
