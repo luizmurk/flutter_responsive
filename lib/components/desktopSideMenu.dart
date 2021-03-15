@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:outlook/data_management/databases.dart';
 import 'package:outlook/responsive.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../constants.dart';
 import '../extensions.dart';
 import 'side_menu_item.dart';
-import 'tags.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -21,6 +21,18 @@ class DesktopSideMenu extends StatefulWidget {
 class _DesktopSideMenuState extends State<DesktopSideMenu> {
   String selectTitle = '';
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectTitle = 'Dashboard';
+    uiComponents
+        .doc('view')
+        .update({'slot': 1})
+        .then((value) {})
+        .catchError((error) {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
@@ -33,9 +45,16 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    "assets/images/Logo Outlook.png",
-                    width: 46,
+                  Container(
+                    margin: EdgeInsets.only(left: 55),
+                    color: Colors.red,
+                    width: 45,
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/splash.png",
+                        width: 46,
+                      ),
+                    ),
                   ),
                   Spacer(),
                   // We don't want to show this close button on Desktop mood
@@ -50,9 +69,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Dashboard';
+                    uiComponents.doc('view').update({'slot': 1}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'Invest Funds',
@@ -61,9 +83,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Invest Funds';
+                    uiComponents.doc('view').update({'slot': 2}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'Fund Wallet',
@@ -72,9 +97,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Fund Wallet';
+                    uiComponents.doc('view').update({'slot': 3}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'Withdraw Funds',
@@ -83,9 +111,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Withdraw Funds';
+                    uiComponents.doc('view').update({'slot': 4}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'Transaction History',
@@ -94,9 +125,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Transaction History';
+                    uiComponents.doc('view').update({'slot': 5}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'Investment History',
@@ -105,9 +139,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'Investment History';
+                    uiComponents.doc('view').update({'slot': 6}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
                 title: 'FAQ',
@@ -116,9 +153,12 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                   print('pressed');
                   setState(() {
                     selectTitle = 'FAQ';
+                    uiComponents.doc('view').update({'slot': 7}).then((value) {
+                      //goToReplacement(DrawFundsPage(), context);
+                    }).catchError((error) {});
                   });
                 },
-                iconSrc: '',
+                iconSrc: 'assets/Icons/Inbox.svg',
               )
             ],
           ),

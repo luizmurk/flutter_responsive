@@ -76,19 +76,23 @@ class _SideMenuItemState extends State<SideMenuItem> {
                     : null,
                 child: Row(
                   children: [
-                    WebsafeSvg.asset(
-                      widget.iconSrc,
-                      height: 20,
-                      color:
-                          (activated || isHover) ? kPrimaryColor : kGrayColor,
+                    Container(
+                      //margin: EdgeInsets.all(100.0),
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                          color:
+                              (activated || isHover) ? kTextColor : kGrayColor,
+                          shape: BoxShape.circle),
                     ),
                     SizedBox(width: kDefaultPadding * 0.75),
                     Text(widget.title,
                         style: TextStyle(
-                            color: (activated || isHover)
-                                ? kTextColor
-                                : kGrayColor,
-                            fontFamily: 'Varela Round')),
+                          color:
+                              (activated || isHover) ? kTextColor : kGrayColor,
+                          fontFamily: 'Varela Round',
+                          fontSize: (activated || isHover) ? 15 : 13,
+                        )),
                     Spacer(),
                     if (widget.itemCount != null)
                       CounterBadge(count: widget.itemCount)

@@ -3,7 +3,6 @@ import 'package:outlook/components/desktopSideMenu.dart';
 import 'package:outlook/components/sideMenu.dart';
 import 'package:outlook/responsive.dart';
 import 'package:outlook/screens/email/DisplayScreen.dart';
-import 'components/list_of_emails.dart';
 
 class MainScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -19,7 +18,9 @@ class MainScreen extends StatelessWidget {
       ),
       body: Responsive(
         // Let's work on our mobile part
-        mobile: ListOfEmails(),
+        mobile: DisplayScreen(
+          scaffoldKey: scaffoldKey,
+        ),
         tablet: Row(
           children: [
             Expanded(
@@ -35,11 +36,11 @@ class MainScreen extends StatelessWidget {
             // Once our width is less then 1300 then it start showing errors
             // Now there is no error if our width is less then 1340
             Expanded(
-              flex: 4,
+              flex: 3,
               child: DesktopSideMenu(),
             ),
             Expanded(
-              flex: 11,
+              flex: 12,
               child: DisplayScreen(
                 scaffoldKey: scaffoldKey,
               ),

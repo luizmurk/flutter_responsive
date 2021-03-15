@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:outlook/data_management/databases.dart';
 import 'package:outlook/models/Email.dart';
-import 'package:websafe_svg/websafe_svg.dart';
+import 'package:outlook/ui_components/views/dashboard.dart';
+import 'package:outlook/ui_components/views/invest.dart';
+import 'package:outlook/ui_components/views/fund.dart';
 
-import '../../constants.dart';
 import 'components/header.dart';
 
 class DisplayScreen extends StatelessWidget {
@@ -15,6 +17,10 @@ class DisplayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic deviceWidth;
+    dynamic deviceHeight;
+    deviceWidth = MediaQuery.of(context).size.width;
+    deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -26,11 +32,71 @@ class DisplayScreen extends StatelessWidget {
                   child: Header(
                     scaffoldKey: scaffoldKey,
                   )),
-              Divider(thickness: 1),
+              //Divider(thickness: 1),
               Expanded(
                   flex: 13,
-                  child: Center(
-                    child: Text('Control Panel'),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Container(
+                      width: deviceWidth * 1,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.05),
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      color: Colors.blue.withOpacity(0.05),
+                      child: StreamBuilder<DocumentSnapshot>(
+                        stream: uiComponents.doc("view").snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Something went wrong');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                                child: Text(
+                              'Loading',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 15),
+                            ));
+                          }
+                          var view = snapshot.data;
+                          print('view here');
+                          print(view);
+                          return (view['slot'] == 1)
+                              ? Dashboard()
+                              : (view['slot'] == 2)
+                                  ? Invest()
+                                  : (view['slot'] == 3)
+                                      ? Fund()
+                                      : (view['slot'] == 4)
+                                          ? Center(
+                                              child: Text('Withdraw Funds'),
+                                            )
+                                          : (view['slot'] == 5)
+                                              ? Center(
+                                                  child: Text(
+                                                      'Transaction History'),
+                                                )
+                                              : (view['slot'] == 6)
+                                                  ? Center(
+                                                      child: Text(
+                                                          'Investment History'),
+                                                    )
+                                                  : (view['slot'] == 7)
+                                                      ? Center(
+                                                          child: Text('FAQ'),
+                                                        )
+                                                      : Center(
+                                                          child: Text(''),
+                                                        );
+                        },
+                      ),
+                      // Center(
+                      //       child: Text('Control Panel'),
+                      //     ),
+                    ),
                   ))
             ],
           ),

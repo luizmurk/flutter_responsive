@@ -30,6 +30,27 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDGx0iJPZuhMh_qa9Su_OleZ0UHfCKWFpI",
+      authDomain: "greylux-mobile.firebaseapp.com",
+      databaseURL: "https://greylux-mobile.firebaseio.com",
+      projectId: "greylux-mobile",
+      storageBucket: "greylux-mobile.appspot.com",
+      messagingSenderId: "916390108907",
+      appId: "1:916390108907:web:fd6e45a53ec42a22e5a8ae",
+      measurementId: "G-GSEET07791"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
