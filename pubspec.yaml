@@ -30,6 +30,9 @@ dependencies:
   cloud_firestore: ^0.14.3+1
   firebase_core: "^0.5.3"
   firebase_auth: "^0.18.4"
+  flutter_paystack: ^1.0.4+1
+  flutterwave: ^0.0.2
+  countup: ^0.1.3
 
   # handle SVGs for Android, iOS, and Web.
   websafe_svg: ^1.1.4+1

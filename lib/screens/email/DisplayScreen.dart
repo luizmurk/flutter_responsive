@@ -5,6 +5,10 @@ import 'package:outlook/models/Email.dart';
 import 'package:outlook/ui_components/views/dashboard.dart';
 import 'package:outlook/ui_components/views/invest.dart';
 import 'package:outlook/ui_components/views/fund.dart';
+import 'package:outlook/ui_components/views/investmentHistory.dart';
+import 'package:outlook/ui_components/views/loadChat.dart';
+import 'package:outlook/ui_components/views/transactionHistory.dart';
+import 'package:outlook/ui_components/views/withdraw.dart';
 
 import 'components/header.dart';
 
@@ -23,7 +27,7 @@ class DisplayScreen extends StatelessWidget {
     deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        //
         child: SafeArea(
           child: Column(
             children: [
@@ -41,9 +45,9 @@ class DisplayScreen extends StatelessWidget {
                       width: deviceWidth * 1,
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.05),
+                          //color: Colors.blue.withOpacity(0.05),
                           borderRadius: BorderRadius.all(Radius.circular(15))),
-                      color: Colors.blue.withOpacity(0.05),
+                      //color: Colors.blue.withOpacity(0.05),
                       child: StreamBuilder<DocumentSnapshot>(
                         stream: uiComponents.doc("view").snapshots(),
                         builder: (BuildContext context,
@@ -71,23 +75,13 @@ class DisplayScreen extends StatelessWidget {
                                   : (view['slot'] == 3)
                                       ? Fund()
                                       : (view['slot'] == 4)
-                                          ? Center(
-                                              child: Text('Withdraw Funds'),
-                                            )
+                                          ? Withdraw()
                                           : (view['slot'] == 5)
-                                              ? Center(
-                                                  child: Text(
-                                                      'Transaction History'),
-                                                )
+                                              ? TransactionHistory()
                                               : (view['slot'] == 6)
-                                                  ? Center(
-                                                      child: Text(
-                                                          'Investment History'),
-                                                    )
+                                                  ? InvestmentHistory()
                                                   : (view['slot'] == 7)
-                                                      ? Center(
-                                                          child: Text('FAQ'),
-                                                        )
+                                                      ? LoadChat()
                                                       : Center(
                                                           child: Text(''),
                                                         );

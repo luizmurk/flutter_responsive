@@ -37,7 +37,7 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
     return Container(
       height: double.infinity,
       padding: EdgeInsets.only(top: kIsWeb ? kDefaultPadding : 0),
-      color: whiteBg,
+      color: const Color(0xFFF8F9FA),
       child: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -45,17 +45,23 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
             children: [
               Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 55),
-                    color: Colors.red,
-                    width: 45,
-                    child: Center(
-                      child: Image.asset(
-                        "assets/images/splash.png",
-                        width: 46,
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(left: 55),
+                  //   color: Colors.red,
+                  //   width: 45,
+                  //   child: Center(
+                  //       child: Text(
+                  //     'lumyVest',
+                  //     style:
+                  //         TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                  //   )
+
+                  //       // Image.asset(
+                  //       //   "assets/images/splash.png",
+                  //       //   width: 46,
+                  //       // ),
+                  //       ),
+                  // ),
                   Spacer(),
                   // We don't want to show this close button on Desktop mood
                   if (!Responsive.isDesktop(context)) CloseButton(),
@@ -147,7 +153,7 @@ class _DesktopSideMenuState extends State<DesktopSideMenu> {
                 iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
-                title: 'FAQ',
+                title: 'Chat Agent',
                 activeTitle: selectTitle,
                 press: () {
                   print('pressed');

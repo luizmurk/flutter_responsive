@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  countup:
+    dependency: "direct main"
+    description:
+      name: countup
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   crypto:
     dependency: transitive
     description:
@@ -172,6 +179,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_paystack:
+    dependency: "direct main"
+    description:
+      name: flutter_paystack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4+1"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:
@@ -196,11 +210,25 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutterwave:
+    dependency: "direct main"
+    description:
+      name: flutterwave
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  hexcolor:
+    dependency: transitive
+    description:
+      name: hexcolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   http:
     dependency: transitive
     description:
@@ -435,6 +463,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
+  tripledes:
+    dependency: transitive
+    description:
+      name: tripledes
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   typed_data:
     dependency: transitive
     description:
@@ -470,6 +505,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.4+1"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   win32:
     dependency: transitive
     description:
@@ -493,4 +535,4 @@ packages:
     version: "4.5.1"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=1.22.0"

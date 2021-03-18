@@ -42,11 +42,11 @@ class _InvestState extends State<Invest> {
     });
   }
 
-  saveData(data)async{
+  saveData(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-                              prefs.setDouble('availableBalance', data['availableBalance']);
-                              prefs.setString('userID', data['userID']);
-                              prefs.setString('userDocId', '4W6tKs8VbcgTrljT1D5d');
+    prefs.setDouble('availableBalance', data['availableBalance']);
+    prefs.setString('userID', data['userID']);
+    prefs.setString('userDocId', '4W6tKs8VbcgTrljT1D5d');
   }
 
   @override
@@ -270,8 +270,8 @@ class _InvestState extends State<Invest> {
                   flex: 6,
                   child: Container(
                     decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                        color: white,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                     padding: EdgeInsets.all(20),
                     child: SafeArea(
                         child: FutureBuilder<DocumentSnapshot>(
@@ -377,11 +377,12 @@ class _InvestState extends State<Invest> {
               child: Column(
                 children: [
                   Expanded(
-                      flex: 4,
+                      flex: 5,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                            color: white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                         padding: EdgeInsets.all(10),
                         child: SafeArea(
                             child: FutureBuilder<DocumentSnapshot>(
@@ -486,218 +487,226 @@ class _InvestState extends State<Invest> {
                         )),
                       )),
                   Expanded(
-                      flex: 11,
-                      child: Container(
-                        child: SafeArea(
-                            child: FutureBuilder<DocumentSnapshot>(
-                          future:
-                              userCredentials.doc("4W6tKs8VbcgTrljT1D5d").get(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return Text("Something went wrong");
-                            }
+                      flex: 10,
+                      child: ListView(children: [
+                        Container(
+                          child: SafeArea(
+                              child: FutureBuilder<DocumentSnapshot>(
+                            future: userCredentials
+                                .doc("4W6tKs8VbcgTrljT1D5d")
+                                .get(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text("Something went wrong");
+                              }
 
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text("Loading");
-                            }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text("Loading");
+                              }
 
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              Map<String, dynamic> data = snapshot.data.data();
-                              print('dash data here');
-                              print(data);
-                              
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('Choose Plan',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      )),
-                                  Row(
-                                    children: [
-                                      new Radio(
-                                        value: 0,
-                                        groupValue: radioValue,
-                                        onChanged: _handleRadioValueChange,
-                                      ),
-                                      Text('Lumy Bronze Plan')
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      new Radio(
-                                        value: 1,
-                                        groupValue: radioValue,
-                                        onChanged: _handleRadioValueChange,
-                                      ),
-                                      Text('Lumy Silver Plan')
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      new Radio(
-                                        value: 2,
-                                        groupValue: radioValue,
-                                        onChanged: _handleRadioValueChange,
-                                      ),
-                                      Text('Lumy Gold Plan')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  fundType == 'Lumy Bronze Plan' && showDetails
-                                      ? Container(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bronze Plan',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                '3 Investment cycle; 75 working days',
-                                                style: TextStyle(
-                                                    color: Colors.grey),
-                                              ),
-                                              Text(
-                                                '40% Return on Interest',
-                                                style: TextStyle(
-                                                    color: Colors.grey),
-                                              ),
-                                              Text(
-                                                'Capital Range: \$100 to \$999.',
-                                                style: TextStyle(
-                                                    color: Colors.grey),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : fundType == 'Lumy Silver Plan' &&
-                                              showDetails
-                                          ? Container(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Silver Plan',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    '6 Investment cycle; 150 working days',
-                                                    style: TextStyle(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Text(
-                                                    '85% Return on Interest',
-                                                    style: TextStyle(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Text(
-                                                    'Capital Range: \$1000 to \$1999.',
-                                                    style: TextStyle(
-                                                        color: Colors.grey),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : fundType == 'Lumy Gold Plan' &&
-                                                  showDetails
-                                              ? Container(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Gold Plan',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        '10 Investment cycle; 250 working days',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                      Text(
-                                                        '130% Return on Interest',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                      Text(
-                                                        'Capital Range: \$2000 to \$3000.',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              : SizedBox(
-                                                  height: 0,
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                Map<String, dynamic> data =
+                                    snapshot.data.data();
+                                print('dash data here');
+                                print(data);
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text('Choose Plan',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        )),
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: 0,
+                                          groupValue: radioValue,
+                                          onChanged: _handleRadioValueChange,
+                                        ),
+                                        Text('Lumy Bronze Plan')
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: 1,
+                                          groupValue: radioValue,
+                                          onChanged: _handleRadioValueChange,
+                                        ),
+                                        Text('Lumy Silver Plan')
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: 2,
+                                          groupValue: radioValue,
+                                          onChanged: _handleRadioValueChange,
+                                        ),
+                                        Text('Lumy Gold Plan')
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    fundType == 'Lumy Bronze Plan' &&
+                                            showDetails
+                                        ? Container(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Bronze Plan',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Expanded(
-                                      child: StreamBuilder<DocumentSnapshot>(
-                                    stream: userCredentials
-                                        .doc("4W6tKs8VbcgTrljT1D5d")
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<DocumentSnapshot>
-                                            snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text('Something went wrong');
-                                      }
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  '3 Investment cycle; 75 working days',
+                                                  style: TextStyle(
+                                                      color: Colors.grey),
+                                                ),
+                                                Text(
+                                                  '40% Return on Interest',
+                                                  style: TextStyle(
+                                                      color: Colors.grey),
+                                                ),
+                                                Text(
+                                                  'Capital Range: \$100 to \$999.',
+                                                  style: TextStyle(
+                                                      color: Colors.grey),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : fundType == 'Lumy Silver Plan' &&
+                                                showDetails
+                                            ? Container(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Silver Plan',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                      '6 Investment cycle; 150 working days',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                    Text(
+                                                      '85% Return on Interest',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                    Text(
+                                                      'Capital Range: \$1000 to \$1999.',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : fundType == 'Lumy Gold Plan' &&
+                                                    showDetails
+                                                ? Container(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Gold Plan',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                          '10 Investment cycle; 250 working days',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Text(
+                                                          '130% Return on Interest',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Text(
+                                                          'Capital Range: \$2000 to \$3000.',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : SizedBox(
+                                                    height: 0,
+                                                  ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Expanded(
+                                        child: StreamBuilder<DocumentSnapshot>(
+                                      stream: userCredentials
+                                          .doc("4W6tKs8VbcgTrljT1D5d")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<DocumentSnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Text('Something went wrong');
+                                        }
 
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text("Loading");
-                                      }
-                                      var creds = snapshot.data.data();
-                                      print('creds here');
-                                      print(creds);
-                                      return showDetails
-                                          ? new AutoRenewTypeForm(
-                                              formKey: formKey,
-                                              plan: fundType,
-                                              bal: creds['availableBalance'])
-                                          : SizedBox(
-                                              height: 0,
-                                            );
-                                    },
-                                  ))
-                                ],
-                              );
-                            }
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Text("Loading");
+                                        }
+                                        var creds = snapshot.data.data();
+                                        print('creds here');
+                                        print(creds);
+                                        return showDetails
+                                            ? new AutoRenewTypeForm(
+                                                formKey: formKey,
+                                                plan: fundType,
+                                                bal: creds['availableBalance'])
+                                            : SizedBox(
+                                                height: 0,
+                                              );
+                                      },
+                                    ))
+                                  ],
+                                );
+                              }
 
-                            //return Text("loading");
-                          },
-                        )),
-                      )),
+                              //return Text("loading");
+                            },
+                          )),
+                        ),
+                      ])),
                 ],
               ),
             ),

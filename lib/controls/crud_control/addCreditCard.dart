@@ -64,56 +64,33 @@ class _AddUserCardsState extends State<AddUserCards> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: .0),
-      child: GestureDetector(
-        onTap: () {
-          print('Submitting form');
-          if (this.widget.formkey.currentState.validate()) {
-            this.widget.formkey.currentState.save(); //onSaved is called!
-            this.widget.formkey.currentState.reset();
+        padding: const EdgeInsets.symmetric(vertical: .0),
+        child: ElevatedButton(
+            onPressed: () {
+              print('Submitting form');
+              if (this.widget.formkey.currentState.validate()) {
+                this.widget.formkey.currentState.save(); //onSaved is called!
+                this.widget.formkey.currentState.reset();
 
-            print(widget.formData);
-            Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: green,
-                elevation: 10,
-                behavior: SnackBarBehavior.floating,
-                content: Text('Card Saved')));
-            if (widget.card == 1) {
-              addUserCard1();
-            } else if (widget.card == 2) {
-              addUserCard2();
-            } else if (widget.card == 3) {
-              addUserCard3();
-            }
-          }
-        },
-        child: Container(
-          //margin: EdgeInsets.only(right: 5),
-          decoration: BoxDecoration(
-              color: Colors.lightBlue,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 2.0, // soften the shadow
-                  spreadRadius: 1, //extend the shadow
-                  offset: Offset(
-                    1.0, // Move to right 10  horizontally
-                    1.0, // Move to bottom 5 Vertically
-                  ),
-                )
-              ],
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          alignment: Alignment.center,
-          width: deviceWidth * 1,
-          height: deviceHeight * 0.08,
-          child: Text(
-            'Save Card',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontFamily: 'ABeeZee', color: Colors.white),
-          ),
-        ),
-      ),
-    );
+                print(widget.formData);
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: green,
+                    elevation: 10,
+                    behavior: SnackBarBehavior.floating,
+                    content: Text('Card Saved')));
+                if (widget.card == 1) {
+                  addUserCard1();
+                } else if (widget.card == 2) {
+                  addUserCard2();
+                } else if (widget.card == 3) {
+                  addUserCard3();
+                }
+              }
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.orange),
+            ),
+            child: Text('Save Card')));
   }
 }
 

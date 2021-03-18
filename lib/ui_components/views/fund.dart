@@ -7,7 +7,10 @@ import 'package:outlook/responsive.dart';
 import 'package:outlook/styleSheet.dart';
 import 'package:outlook/ui_components/forms/autoRenewTypeForm.dart';
 import 'package:outlook/ui_components/forms/creditCardFundForm.dart';
+import 'package:outlook/ui_components/views/flutterWavePayment.dart';
+import 'package:outlook/ui_components/views/payMoney.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutterwave/flutterwave.dart';
 
 class Fund extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _FundState extends State<Fund> {
   int radioValue;
   bool showDetails = false;
   String fundType = '';
+  dynamic userData;
 
   void _handleRadioValueChange(int value) {
     setState(() {
@@ -43,11 +47,11 @@ class _FundState extends State<Fund> {
     });
   }
 
-  saveData(data)async{
+  saveData(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-                              prefs.setDouble('availableBalance', data['availableBalance']);
-                              prefs.setString('userID', data['userID']);
-                              prefs.setString('userDocId', '4W6tKs8VbcgTrljT1D5d');
+    prefs.setDouble('availableBalance', data['availableBalance']);
+    prefs.setString('userID', data['userID']);
+    prefs.setString('userDocId', '4W6tKs8VbcgTrljT1D5d');
   }
 
   @override
@@ -61,7 +65,7 @@ class _FundState extends State<Fund> {
             child: Row(
             children: [
               Expanded(
-                  flex: 15,
+                  flex: 9,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: SafeArea(
@@ -82,6 +86,7 @@ class _FundState extends State<Fund> {
                           Map<String, dynamic> data = snapshot.data.data();
                           print('dash data here');
                           print(data);
+                          userData = data;
                           saveData(data);
                           return ListView(
                             //crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,8 +161,7 @@ class _FundState extends State<Fund> {
                                         ],
                                       ),
                                     )
-                                  : fundType == 'USSD Code' &&
-                                          showDetails
+                                  : fundType == 'USSD Code' && showDetails
                                       ? Container(
                                           child: Column(
                                             crossAxisAlignment:
@@ -193,30 +197,56 @@ class _FundState extends State<Fund> {
                                       : fundType == 'Pay With Card' &&
                                               showDetails
                                           ? StreamBuilder<DocumentSnapshot>(
-                                stream: userCredentials
-                                    .doc("4W6tKs8VbcgTrljT1D5d")
-                                    .snapshots(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text('Something went wrong');
-                                  }
+                                              stream: userCredentials
+                                                  .doc("4W6tKs8VbcgTrljT1D5d")
+                                                  .snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<
+                                                          DocumentSnapshot>
+                                                      snapshot) {
+                                                if (snapshot.hasError) {
+                                                  return Text(
+                                                      'Something went wrong');
+                                                }
 
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Text("Loading");
-                                  }
-                                  var creds = snapshot.data.data();
-                                  print('creds here');
-                                  print(creds);
-                                  return showDetails
-                                      ? new CreditCardForm(
-                              formKey: formKey, data: creds, id: creds['userID'])
-                                      : SizedBox(
-                                          height: 0,
-                                        );
-                                },
-                              )
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Text("Loading");
+                                                }
+                                                var creds =
+                                                    snapshot.data.data();
+                                                print('creds here');
+                                                print(creds);
+                                                return showDetails
+                                                    ? Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Make your card payments easily with flutterWave'),
+                                                          SizedBox(
+                                                            height: 15,
+                                                          ),
+                                                          new PaymentWidget(
+                                                              formKey: formKey,
+                                                              data: creds,
+                                                              id: creds[
+                                                                  'userID']),
+                                                          SizedBox(
+                                                            height: 15,
+                                                          ),
+                                                        ],
+                                                      )
+                                                    // CreditCardForm(
+                                                    //     formKey: formKey,
+                                                    //     data: creds,
+                                                    //     id: creds['userID'])
+                                                    : SizedBox(
+                                                        height: 0,
+                                                      );
+                                              },
+                                            )
                                           : SizedBox(
                                               height: 0,
                                             ),
@@ -231,123 +261,157 @@ class _FundState extends State<Fund> {
                       },
                     )),
                   )),
-              // Expanded(
-              //     flex: 6,
-              //     child: Container(
-              //       decoration: BoxDecoration(
-              //             color: white,
-              //             borderRadius: BorderRadius.all(Radius.circular(15))),
-              //       padding: EdgeInsets.all(20),
-              //       child: SafeArea(
-              //           child: FutureBuilder<DocumentSnapshot>(
-              //         future: userCredentials.doc("4W6tKs8VbcgTrljT1D5d").get(),
-              //         builder: (BuildContext context,
-              //             AsyncSnapshot<DocumentSnapshot> snapshot) {
-              //           if (snapshot.hasError) {
-              //             return Text("Something went wrong");
-              //           }
+              Expanded(
+                  flex: 6,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    padding: EdgeInsets.all(20),
+                    child: SafeArea(
+                        child: FutureBuilder<DocumentSnapshot>(
+                      future: userCredentials.doc("4W6tKs8VbcgTrljT1D5d").get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("Something went wrong");
+                        }
 
-              //           if (snapshot.connectionState ==
-              //               ConnectionState.waiting) {
-              //             return Text("Loading");
-              //           }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text("Loading");
+                        }
 
-              //           if (snapshot.connectionState == ConnectionState.done) {
-              //             Map<String, dynamic> data = snapshot.data.data();
-              //             print('dash data here');
-              //             print(data);
-              //             return Column(
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: [
-              //                 Text(
-              //                   'Portfolios',
-              //                   style: TextStyle(
-              //                       fontFamily: 'Acumin', letterSpacing: 2),
-              //                 ),
-              //                 Expanded(
-              //                     child: StreamBuilder<QuerySnapshot>(
-              //                   stream: investments
-              //                       .where('userID', isEqualTo: data['userID'])
-              //                       .snapshots(),
-              //                   builder: (BuildContext context,
-              //                       AsyncSnapshot<QuerySnapshot> snapshot) {
-              //                     if (snapshot.hasError) {
-              //                       return Text('Something went wrong');
-              //                     }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          Map<String, dynamic> data = snapshot.data.data();
+                          print('dash data here');
+                          print(data);
+                          return PayMoneyPage();
+                        }
 
-              //                     if (snapshot.hasData &&
-              //                         snapshot.data.docs.isEmpty) {
-              //                       return Center(
-              //                           child: Column(
-              //                         children: [
-              //                           SizedBox(
-              //                             height: 85,
-              //                           ),
-              //                           Icon(
-              //                             Icons.app_blocking,
-              //                             color: Colors.grey,
-              //                             size: 35.0,
-              //                           ),
-              //                           SizedBox(
-              //                             height: 10,
-              //                           ),
-              //                           Text(
-              //                             'You\'ve no investments',
-              //                             style: TextStyle(
-              //                               fontSize: 15,
-              //                             ),
-              //                           ),
-              //                           SizedBox(
-              //                             height: 10,
-              //                           ),
-              //                           ElevatedButton(
-              //                               onPressed: () {
-              //                                 print('Pressed');
-              //                               },
-              //                               style: ButtonStyle(
-              //                                 backgroundColor:
-              //                                     MaterialStateProperty.all(
-              //                                         Colors.orange),
-              //                               ),
-              //                               child: Text('Get Started'))
-              //                         ],
-              //                       ));
-              //                     }
-
-              //                     if (snapshot.connectionState ==
-              //                         ConnectionState.waiting) {
-              //                       return Text("Loading");
-              //                     }
-
-              //                     return new ListView(
-              //                       children: snapshot.data.docs
-              //                           .map((DocumentSnapshot document) {
-              //                         return new ActiveInvests();
-              //                       }).toList(),
-              //                     );
-              //                   },
-              //                 ))
-              //               ],
-              //             );
-              //           }
-
-              //           return Text("loading");
-              //         },
-              //       )),
-              //     ))
+                        return Text("loading");
+                      },
+                    )),
+                  ))
             ],
           ))
         : Container(
             child: SafeArea(
               child: Column(
                 children: [
+                  // Expanded(
+                  //     flex: 4,
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //           color: white,
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(15))),
+                  //       padding: EdgeInsets.all(10),
+                  //       child: SafeArea(
+                  //           child: FutureBuilder<DocumentSnapshot>(
+                  //         future:
+                  //             userCredentials.doc("4W6tKs8VbcgTrljT1D5d").get(),
+                  //         builder: (BuildContext context,
+                  //             AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  //           if (snapshot.hasError) {
+                  //             return Text("Something went wrong");
+                  //           }
+
+                  //           if (snapshot.connectionState ==
+                  //               ConnectionState.waiting) {
+                  //             return Text("Loading");
+                  //           }
+
+                  //           if (snapshot.connectionState ==
+                  //               ConnectionState.done) {
+                  //             Map<String, dynamic> data = snapshot.data.data();
+                  //             print('dash data here');
+                  //             print(data);
+                  //             saveData(data);
+                  //             return Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               children: [
+                  //                 Text(
+                  //                   'Active investments',
+                  //                   style: TextStyle(
+                  //                       fontFamily: 'Acumin', letterSpacing: 2),
+                  //                 ),
+                  //                 Expanded(
+                  //                     child: StreamBuilder<QuerySnapshot>(
+                  //                   stream: investments
+                  //                       .where('userID',
+                  //                           isEqualTo: data['userID'])
+                  //                       .snapshots(),
+                  //                   builder: (BuildContext context,
+                  //                       AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //                     if (snapshot.hasError) {
+                  //                       return Text('Something went wrong');
+                  //                     }
+
+                  //                     if (snapshot.hasData &&
+                  //                         snapshot.data.docs.isEmpty) {
+                  //                       return Center(
+                  //                           child: Column(
+                  //                         children: [
+                  //                           SizedBox(
+                  //                             height: 85,
+                  //                           ),
+                  //                           Icon(
+                  //                             Icons.app_blocking,
+                  //                             color: Colors.grey,
+                  //                             size: 35.0,
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: 10,
+                  //                           ),
+                  //                           Text(
+                  //                             'You\'ve no investments',
+                  //                             style: TextStyle(
+                  //                               fontSize: 15,
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: 10,
+                  //                           ),
+                  //                           ElevatedButton(
+                  //                               onPressed: () {
+                  //                                 print('Pressed');
+                  //                               },
+                  //                               style: ButtonStyle(
+                  //                                 backgroundColor:
+                  //                                     MaterialStateProperty.all(
+                  //                                         Colors.orange),
+                  //                               ),
+                  //                               child: Text('Get Started'))
+                  //                         ],
+                  //                       ));
+                  //                     }
+
+                  //                     if (snapshot.connectionState ==
+                  //                         ConnectionState.waiting) {
+                  //                       return Text("Loading");
+                  //                     }
+
+                  //                     return new ListView(
+                  //                       scrollDirection: Axis.horizontal,
+                  //                       children: snapshot.data.docs
+                  //                           .map((DocumentSnapshot document) {
+                  //                         return new ActiveInvests();
+                  //                       }).toList(),
+                  //                     );
+                  //                   },
+                  //                 ))
+                  //               ],
+                  //             );
+                  //           }
+
+                  //           return Text("loading");
+                  //         },
+                  //       )),
+                  //     )),
                   Expanded(
-                      flex: 4,
+                      flex: 15,
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                        padding: EdgeInsets.all(10),
                         child: SafeArea(
                             child: FutureBuilder<DocumentSnapshot>(
                           future:
@@ -369,118 +433,10 @@ class _FundState extends State<Fund> {
                               print('dash data here');
                               print(data);
                               saveData(data);
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              return ListView(
+                                //crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Active investments',
-                                    style: TextStyle(
-                                        fontFamily: 'Acumin', letterSpacing: 2),
-                                  ),
-                                  Expanded(
-                                      child: StreamBuilder<QuerySnapshot>(
-                                    stream: investments
-                                        .where('userID',
-                                            isEqualTo: data['userID'])
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text('Something went wrong');
-                                      }
-
-                                      if (snapshot.hasData &&
-                                          snapshot.data.docs.isEmpty) {
-                                        return Center(
-                                            child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 85,
-                                            ),
-                                            Icon(
-                                              Icons.app_blocking,
-                                              color: Colors.grey,
-                                              size: 35.0,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'You\'ve no investments',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  print('Pressed');
-                                                },
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.orange),
-                                                ),
-                                                child: Text('Get Started'))
-                                          ],
-                                        ));
-                                      }
-
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text("Loading");
-                                      }
-
-                                      return new ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: snapshot.data.docs
-                                            .map((DocumentSnapshot document) {
-                                          return new ActiveInvests();
-                                        }).toList(),
-                                      );
-                                    },
-                                  ))
-                                ],
-                              );
-                            }
-
-                            return Text("loading");
-                          },
-                        )),
-                      )),
-                  Expanded(
-                      flex: 11,
-                      child: Container(
-                        child: SafeArea(
-                            child: FutureBuilder<DocumentSnapshot>(
-                          future:
-                              userCredentials.doc("4W6tKs8VbcgTrljT1D5d").get(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return Text("Something went wrong");
-                            }
-
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text("Loading");
-                            }
-
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              Map<String, dynamic> data = snapshot.data.data();
-                              print('dash data here');
-                              print(data);
-                              
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('Choose Plan',
+                                  Text('Choose Funding Method',
                                       style: TextStyle(
                                         color: Colors.grey,
                                       )),
@@ -491,7 +447,7 @@ class _FundState extends State<Fund> {
                                         groupValue: radioValue,
                                         onChanged: _handleRadioValueChange,
                                       ),
-                                      Text('Lumy Bronze Plan')
+                                      Text('Pay With Card')
                                     ],
                                   ),
                                   Row(
@@ -501,7 +457,7 @@ class _FundState extends State<Fund> {
                                         groupValue: radioValue,
                                         onChanged: _handleRadioValueChange,
                                       ),
-                                      Text('Lumy Silver Plan')
+                                      Text('Bank Transfer')
                                     ],
                                   ),
                                   Row(
@@ -511,14 +467,15 @@ class _FundState extends State<Fund> {
                                         groupValue: radioValue,
                                         onChanged: _handleRadioValueChange,
                                       ),
-                                      Text('Lumy Gold Plan')
+                                      Text('USSD Code')
                                     ],
                                   ),
                                   SizedBox(
                                     height: 30,
                                   ),
-                                  fundType == 'Lumy Bronze Plan' && showDetails
+                                  fundType == 'Bank Transfer' && showDetails
                                       ? Container(
+                                          padding: EdgeInsets.only(left: 10),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -550,8 +507,7 @@ class _FundState extends State<Fund> {
                                             ],
                                           ),
                                         )
-                                      : fundType == 'Lumy Silver Plan' &&
-                                              showDetails
+                                      : fundType == 'USSD Code' && showDetails
                                           ? Container(
                                               child: Column(
                                                 crossAxisAlignment:
@@ -584,41 +540,63 @@ class _FundState extends State<Fund> {
                                                 ],
                                               ),
                                             )
-                                          : fundType == 'Lumy Gold Plan' &&
+                                          : fundType == 'Pay With Card' &&
                                                   showDetails
-                                              ? Container(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Gold Plan',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        '10 Fundment cycle; 250 working days',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                      Text(
-                                                        '130% Return on Interest',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                      Text(
-                                                        'Capital Range: \$2000 to \$3000.',
-                                                        style: TextStyle(
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ],
-                                                  ),
+                                              ? StreamBuilder<DocumentSnapshot>(
+                                                  stream: userCredentials
+                                                      .doc(
+                                                          "4W6tKs8VbcgTrljT1D5d")
+                                                      .snapshots(),
+                                                  builder: (BuildContext
+                                                          context,
+                                                      AsyncSnapshot<
+                                                              DocumentSnapshot>
+                                                          snapshot) {
+                                                    if (snapshot.hasError) {
+                                                      return Text(
+                                                          'Something went wrong');
+                                                    }
+
+                                                    if (snapshot
+                                                            .connectionState ==
+                                                        ConnectionState
+                                                            .waiting) {
+                                                      return Text("Loading");
+                                                    }
+                                                    var creds =
+                                                        snapshot.data.data();
+                                                    print('creds here');
+                                                    print(creds);
+                                                    return showDetails
+                                                        ? new Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                  'Make your card payments easily with flutterWave'),
+                                                              SizedBox(
+                                                                height: 15,
+                                                              ),
+                                                              new PaymentWidget(
+                                                                  formKey:
+                                                                      formKey,
+                                                                  data: creds,
+                                                                  id: creds[
+                                                                      'userID']),
+                                                              SizedBox(
+                                                                height: 15,
+                                                              ),
+                                                            ],
+                                                          )
+                                                        // CreditCardForm(
+                                                        //       formKey: formKey,
+                                                        //       data: creds,
+                                                        //       id: creds['userID'])
+                                                        : SizedBox(
+                                                            height: 0,
+                                                          );
+                                                  },
                                                 )
                                               : SizedBox(
                                                   height: 0,
@@ -626,35 +604,6 @@ class _FundState extends State<Fund> {
                                   SizedBox(
                                     height: 30,
                                   ),
-                                  Expanded(
-                                      child: StreamBuilder<DocumentSnapshot>(
-                                    stream: userCredentials
-                                        .doc("4W6tKs8VbcgTrljT1D5d")
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<DocumentSnapshot>
-                                            snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text('Something went wrong');
-                                      }
-
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text("Loading");
-                                      }
-                                      var creds = snapshot.data.data();
-                                      print('creds here');
-                                      print(creds);
-                                      return showDetails
-                                          ? new AutoRenewTypeForm(
-                                              formKey: formKey,
-                                              plan: fundType,
-                                              bal: creds['availableBalance'])
-                                          : SizedBox(
-                                              height: 0,
-                                            );
-                                    },
-                                  ))
                                 ],
                               );
                             }

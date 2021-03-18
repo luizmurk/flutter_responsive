@@ -140,7 +140,7 @@ class _AppSideMenuState extends State<AppSideMenu> {
                 iconSrc: 'assets/Icons/Inbox.svg',
               ),
               SideMenuItem(
-                title: 'FAQ',
+                title: 'Chat Agent',
                 activeTitle: selectTitle,
                 press: () {
                   print('pressed');
