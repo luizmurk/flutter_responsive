@@ -36,10 +36,10 @@ class _DashboardState extends State<Dashboard> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Portfolios',
-                  style: TextStyle(fontFamily: 'Acumin', letterSpacing: 2),
-                ),
+                Text('Portfolios',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    )),
                 Expanded(
                     child: StreamBuilder<QuerySnapshot>(
                   stream: investments

@@ -294,11 +294,10 @@ class _InvestState extends State<Invest> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Portfolios',
-                                style: TextStyle(
-                                    fontFamily: 'Acumin', letterSpacing: 2),
-                              ),
+                              Text('Active Investments',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  )),
                               Expanded(
                                   child: StreamBuilder<QuerySnapshot>(
                                 stream: investments
