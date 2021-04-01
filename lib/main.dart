@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:outlook/constants.dart';
 import 'package:outlook/screens/main/main_screen.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    new MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(),
+      title: 'ECTM Admin',
+      theme: ThemeData(fontFamily: 'Varela Round'),
       home: MainScreen(),
     );
   }

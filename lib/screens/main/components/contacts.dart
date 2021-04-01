@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:outlook/components/side_menu.dart';
 import 'package:outlook/models/Email.dart';
 import 'package:outlook/responsive.dart';
-import 'package:outlook/screens/email/email_screen.dart';
+import 'package:outlook/screens/email/customersPane.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../../../constants.dart';
@@ -10,17 +10,17 @@ import 'email_card.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-class ListOfEmails extends StatefulWidget {
+class Contacts extends StatefulWidget {
   // Press "Command + ."
-  const ListOfEmails({
+  const Contacts({
     Key key,
   }) : super(key: key);
 
   @override
-  _ListOfEmailsState createState() => _ListOfEmailsState();
+  _ContactsState createState() => _ContactsState();
 }
 
-class _ListOfEmailsState extends State<ListOfEmails> {
+class _ContactsState extends State<Contacts> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      "Sort by date",
+                      "Contacts",
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Spacer(),

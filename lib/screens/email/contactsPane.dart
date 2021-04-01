@@ -6,13 +6,13 @@ import 'package:websafe_svg/websafe_svg.dart';
 import '../../constants.dart';
 import 'components/header.dart';
 
-class EmailScreen extends StatelessWidget {
-  const EmailScreen({
+class ContactsPane extends StatelessWidget {
+  const ContactsPane({
     Key key,
     this.email,
   }) : super(key: key);
 
-  final Email email;
+  final CustomersQouteRequest email;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,11 @@ class EmailScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        maxRadius: 24,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: AssetImage(emails[1].image),
-                      ),
+                      // CircleAvatar(
+                      //   maxRadius: 24,
+                      //   backgroundColor: Colors.transparent,
+                      //   backgroundImage: AssetImage(emails[1].image),
+                      // ),
                       SizedBox(width: kDefaultPadding),
                       Expanded(
                         child: Column(
@@ -49,7 +49,7 @@ class EmailScreen extends StatelessWidget {
                                     children: [
                                       Text.rich(
                                         TextSpan(
-                                          text: emails[1].name,
+                                          text: emails[1].full_name,
                                           style: Theme.of(context)
                                               .textTheme
                                               .button,
