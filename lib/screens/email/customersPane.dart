@@ -55,8 +55,7 @@ class EmailScreen extends StatelessWidget {
                                               .button,
                                           children: [
                                             TextSpan(
-                                                text:
-                                                    "  <elvia.atkins@gmail.com> to Jerry Torp",
+                                                text: "  ( ${email.email} )",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .caption),
@@ -64,7 +63,7 @@ class EmailScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        "Inspiration for our new home",
+                                        "Shipment Details",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -106,7 +105,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('0798873884738'),
+                                        Text(email.cell_phone),
                                       ],
                                     ),
                                     Row(
@@ -117,7 +116,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('22334884738'),
+                                        Text(email.home_phone),
                                       ],
                                     ),
                                     Row(children: [
@@ -127,7 +126,7 @@ class EmailScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Spacer(),
-                                      Text('Block A78 Nockchart'),
+                                      Text(email.street_address),
                                     ]),
                                     Row(
                                       children: [
@@ -137,7 +136,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Ever grande'),
+                                        Text(email.city),
                                       ],
                                     ),
                                     Row(
@@ -148,7 +147,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Arizona'),
+                                        Text(email.state),
                                       ],
                                     ),
                                     Row(
@@ -159,7 +158,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('07988738'),
+                                        Text(email.pickup_zipcode),
                                       ],
                                     ),
                                     SizedBox(
@@ -183,7 +182,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('0798873884738'),
+                                        Text(email.pickup_location),
                                       ],
                                     ),
                                     Row(
@@ -194,7 +193,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('22334884738'),
+                                        Text(email.pickup_street),
                                       ],
                                     ),
                                     Row(children: [
@@ -204,7 +203,7 @@ class EmailScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Spacer(),
-                                      Text('Block A78 Nockchart'),
+                                      Text(email.pickup_city),
                                     ]),
                                     Row(
                                       children: [
@@ -214,7 +213,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Ever grande'),
+                                        Text(email.pickup_state),
                                       ],
                                     ),
                                     Row(
@@ -225,7 +224,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Arizona'),
+                                        Text(email.pickup_zipcode),
                                       ],
                                     ),
                                     Row(
@@ -236,7 +235,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('07988738'),
+                                        Text(email.pickup_date),
                                       ],
                                     ),
                                     SizedBox(
@@ -260,7 +259,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('0798873884738'),
+                                        Text(email.delivery_location),
                                       ],
                                     ),
                                     Row(
@@ -271,7 +270,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('22334884738'),
+                                        Text(email.delivery_street_address),
                                       ],
                                     ),
                                     Row(children: [
@@ -281,7 +280,7 @@ class EmailScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Spacer(),
-                                      Text('Block A78 Nockchart'),
+                                      Text(email.delivery_city),
                                     ]),
                                     Row(
                                       children: [
@@ -291,7 +290,7 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Ever grande'),
+                                        Text(email.delivery_state),
                                       ],
                                     ),
                                     Row(
@@ -302,7 +301,73 @@ class EmailScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Spacer(),
-                                        Text('Arizona'),
+                                        Text(email.delivery_zipcode),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Shipment Details",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(thickness: 1),
+                                    SizedBox(height: kDefaultPadding / 2),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Quantity:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Spacer(),
+                                        Text(email.quantity),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Type:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Spacer(),
+                                        Text(email.type),
+                                      ],
+                                    ),
+                                    Row(children: [
+                                      Text(
+                                        'Year:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Spacer(),
+                                      Text(email.year),
+                                    ]),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Make:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Spacer(),
+                                        Text(email.make),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Model:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Spacer(),
+                                        Text(email.model),
                                       ],
                                     ),
                                   ],

@@ -26,6 +26,22 @@ class _MainScreenState extends State<MainScreen> {
   int shipmentIndex = 0;
   int trackingIndex = 0;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('qoutesRequest')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["full_name"]);
+        demo_data.add(doc.data());
+        print(demo_data);
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     // It provide us the width and height
     Size _size = MediaQuery.of(context).size;
@@ -42,30 +58,29 @@ class _MainScreenState extends State<MainScreen> {
             return Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.hasData && snapshot.data.docs.isEmpty) {
-            return Center(
-                child: Column(
-              children: [
-                SizedBox(
-                  height: 85,
-                ),
-                Icon(
-                  Icons.app_blocking,
-                  color: Colors.grey,
-                  size: 35.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                ),
-                Text(
-                  'You\'ve not made any transaction',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ));
-          }
-          print('your docs');
-          print(snapshot.data.docs);
+          // if (snapshot.hasData && snapshot.data.docs.isEmpty) {
+          //   return Center(
+          //       child: Column(
+          //     children: [
+          //       SizedBox(
+          //         height: 85,
+          //       ),
+          //       Icon(
+          //         Icons.app_blocking,
+          //         color: Colors.grey,
+          //         size: 35.0,
+          //         semanticLabel: 'Text to announce in accessibility modes',
+          //       ),
+          //       Text(
+          //         'You\'ve not made any transaction',
+          //         style: TextStyle(
+          //           fontSize: 15,
+          //         ),
+          //       ),
+          //     ],
+          //   ));
+          // }
+
           return new Responsive(
             // Let's work on our mobile part
             mobile: ListOfEmails(

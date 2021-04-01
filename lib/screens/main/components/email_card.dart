@@ -34,6 +34,7 @@ class EmailCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -90,7 +91,7 @@ class EmailCard extends StatelessWidget {
                   ),
                   SizedBox(height: kDefaultPadding / 2),
                   Text(
-                    email.address,
+                    email.street_address,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.caption.copyWith(

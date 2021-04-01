@@ -31,20 +31,25 @@ class _CreditBankAccountState extends State<CreditBankAccount> {
     Future<void> creditBankAccount() {
       // Call the user's CollectionReference to add a new user
       return FirebaseFirestore.instance
-          .collection('userCredentials')
-          .doc()
+          .collection('qoutesRequest')
+          .doc(widget.formData['id'])
           .update({
-            'status': widget.formData['status'],
-            'update_message': widget.formData['update_message'],
-            'expected_delivery_date': widget.formData['expected_delivery_date'],
-            'route': widget.formData['route'],
-            'delivery_man_contact': widget.formData['delivery_man_contact'],
-          })
-          .then((value) {})
-          .catchError((error) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text('An error occured')));
-          });
+        'shipment_status': 'active',
+        'status': widget.formData['status'],
+        'update_message': widget.formData['update_message'],
+        'expected_delivery_date': widget.formData['expected_delivery_date'],
+        'route': widget.formData['route'],
+        'delivery_man_contact': widget.formData['delivery_man_contact'],
+      }).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.green,
+            elevation: 10,
+            behavior: SnackBarBehavior.floating,
+            content: Text('update sent')));
+      }).catchError((error) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('An error occured')));
+      });
     }
 
     return Padding(
@@ -56,25 +61,14 @@ class _CreditBankAccountState extends State<CreditBankAccount> {
             this.widget.formkey.currentState.save(); //onSaved is called!
 
             print(widget.formData);
-            if (widget.formData['region'] == null) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content:
-                      Text('You must pick a region you are withdrawing from')));
-            } else if (bal < widget.formData['amount']) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  backgroundColor: Colors.red,
-                  elevation: 10,
-                  behavior: SnackBarBehavior.floating,
-                  content: Text('Insufucient Fund')));
-            } else {
-              this.widget.formkey.currentState.reset();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  backgroundColor: Colors.green,
-                  elevation: 10,
-                  behavior: SnackBarBehavior.floating,
-                  content: Text('Request Sent')));
-              creditBankAccount();
-            }
+
+            this.widget.formkey.currentState.reset();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.orange,
+                elevation: 10,
+                behavior: SnackBarBehavior.floating,
+                content: Text('sending update')));
+            creditBankAccount();
           }
         },
         child: Container(
