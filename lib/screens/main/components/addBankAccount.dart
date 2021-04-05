@@ -30,16 +30,14 @@ class _CreditBankAccountState extends State<CreditBankAccount> {
 
     Future<void> creditBankAccount() {
       // Call the user's CollectionReference to add a new user
-      return FirebaseFirestore.instance
-          .collection('qoutesRequest')
-          .doc(widget.formData['id'])
-          .update({
+      return FirebaseFirestore.instance.collection('trackingUpdate').add({
         'shipment_status': 'active',
         'status': widget.formData['status'],
         'update_message': widget.formData['update_message'],
         'expected_delivery_date': widget.formData['expected_delivery_date'],
         'route': widget.formData['route'],
         'delivery_man_contact': widget.formData['delivery_man_contact'],
+        'id': widget.formData['id']
       }).then((value) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.green,
@@ -47,6 +45,7 @@ class _CreditBankAccountState extends State<CreditBankAccount> {
             behavior: SnackBarBehavior.floating,
             content: Text('update sent')));
       }).catchError((error) {
+        print(error);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('An error occured')));
       });

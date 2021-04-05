@@ -63,7 +63,7 @@ class EmailScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        "Shipment Details",
+                                        email.tracking_code,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,

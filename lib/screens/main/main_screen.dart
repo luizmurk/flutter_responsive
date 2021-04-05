@@ -148,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
                                   view = 2;
                                 });
                               },
-                              title: "Shipments",
+                              title: "Tracking History",
                               iconSrc: "assets/Icons/Send.svg",
                               isActive: false,
                               showBorder: false,
@@ -159,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
                                   view = 3;
                                 });
                               },
-                              title: "Tracking Updates",
+                              title: "Update Tracking",
                               iconSrc: "assets/Icons/File.svg",
                               isActive: false,
                               showBorder: false,

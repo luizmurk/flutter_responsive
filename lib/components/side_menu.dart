@@ -47,7 +47,7 @@ class SideMenu extends StatelessWidget {
               ).addNeumorphism(),
               SideMenuItem(
                 press: () {},
-                title: "Shipments",
+                title: "updates",
                 iconSrc: "assets/Icons/Send.svg",
                 isActive: false,
               ).addNeumorphism(),
